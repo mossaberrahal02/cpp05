@@ -2,6 +2,7 @@
 
 #include <exception>
 #include <iostream>
+#include <ostream>
 
 typedef std::string str;
 #define endl std::endl
@@ -37,3 +38,4 @@ class Bureaucrat : public std::exception
         };
 };
 
+std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj);
