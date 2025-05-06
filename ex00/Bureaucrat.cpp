@@ -2,7 +2,6 @@
 
 Bureaucrat::Bureaucrat( void ) : name("defaultName"), grade(150) 
 {
-    // std::cout << "default constructor\n";
     if(grade > 150)
     {
         throw GradeTooLowException();
@@ -15,7 +14,6 @@ Bureaucrat::Bureaucrat( void ) : name("defaultName"), grade(150)
 
 Bureaucrat::Bureaucrat( str name, int grade ): name(name), grade(grade)
 {
-    // std::cout << "params constructor "<< endl;
     if(grade > 150)
     {
         throw GradeTooLowException();
@@ -28,13 +26,11 @@ Bureaucrat::Bureaucrat( str name, int grade ): name(name), grade(grade)
 
 Bureaucrat::Bureaucrat( const Bureaucrat & obj )
 {
-    // std::cout << "copy constructor\n";
     *this = obj;
 }
 
 Bureaucrat & Bureaucrat::operator=( const Bureaucrat & obj )
 {
-    // std::cout << "copy assignement oper\n";
     if(this != &obj)
     {
         this->grade = obj.getGrade();
@@ -44,7 +40,6 @@ Bureaucrat & Bureaucrat::operator=( const Bureaucrat & obj )
 
 Bureaucrat::~Bureaucrat( void ) throw()
 {
-    // std::cout << "destructor\n";
 }
 
 const str Bureaucrat::getName() const
