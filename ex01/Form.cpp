@@ -2,7 +2,6 @@
 
 Form::Form( void ) : name("defaultName"), gradeToExecute(150), gradeToSign(150), signedBook(0)
 {
-    // std::cout << "default constructor\n";
     if(gradeToExecute > 150 || gradeToSign > 150)
     {
         throw GradeTooLowException();
@@ -15,7 +14,6 @@ Form::Form( void ) : name("defaultName"), gradeToExecute(150), gradeToSign(150),
 
 Form::Form( str name, int gradeToExecute, int  gradeToSign): name(name), gradeToExecute(gradeToExecute), gradeToSign(gradeToSign), signedBook(0)
 {
-    // std::cout << "params constructor "<< endl;
     if(gradeToExecute > 150 || gradeToSign > 150)
     {
         throw GradeTooLowException();
@@ -26,14 +24,12 @@ Form::Form( str name, int gradeToExecute, int  gradeToSign): name(name), gradeTo
     }
 }
 
-Form::Form( const Form & obj)
+Form::Form( const Form & obj):name(obj.name), gradeToExecute(obj.gradeToExecute), gradeToSign(obj.gradeToSign), signedBook(obj.signedBook)
 {
-    *this = obj;
 }
 
 Form & Form::operator=( const Form & obj )
 {
-    // std::cout << "copy assignement oper\n";
     if(this != &obj)
         this->signedBook = obj.getSignedBook();
     return *this;
@@ -41,7 +37,6 @@ Form & Form::operator=( const Form & obj )
 
 Form::~Form( void ) throw()
 {
-    // std::cout << "destructor\n";
 }
 
 bool Form::getSignedBook() const
@@ -54,50 +49,42 @@ const str Form::getName () const
     return (name);
 }
 
-const int Form::getGradeToSign () const
+int Form::getGradeToSign () const
 {
     return (gradeToSign);
 }
 
-const int Form::getGradeToExecute () const
+int Form::getGradeToExecute () const
 {
     return (gradeToExecute);
 }
 
+std::ostream & operator << ( std::ostream &os, const Form &obj )
+{
+    os << "name = " << obj.getName() << "\n"; 
+    os << "gradeToSign = " << obj.getGradeToSign() << "\n";
+    os << "getGradeToExecute = " << obj.getGradeToExecute() << "\n";
+    if(obj.getSignedBook())
+        os << "signedBook = 1";
+    else
+        os << "signedBook = 0";
+    return os;
+}
 
-// void Form::incrementGradeToExecute()
-// {
-//     gradeToExecute--;
-//     if(gradeToExecute < 1)
-//     {
-//         gradeToExecute++;
-//         throw Form::GradeTooHighException();
-//     }
-// }
-// void Form::decrementGradeToExecute()
-// {
-//     gradeToExecute++;
-//     if(gradeToExecute > 150)
-//     {
-//         gradeToExecute--;
-//         throw Form::GradeTooLowException();
-//     }
-// }
-// void Form::increment()
-// {
-//     grade--;
-//     if(grade < 1)
-//     {
-//         grade++;
-//         throw Form::GradeTooHighException();
-//     }
-// }
-// void Form::decrement()
-// {
-//     grade++;
-//     if(grade > 150)
-//     {
-//         grade--;
-//         throw Form::GradeTooLowException();
-//     }
-// }
+
+const char * Form::GradeTooHighException::what () const throw ()
+{
+    return "Form grade is too high.";
+}
+const char * Form::GradeTooLowException::what () const throw ()
+{
+    return "Form grade is too low.";
+}
+
+void Form::beSigned( Bureaucrat & b )
+{
+    if(this->gradeToSign >= b.getGrade())
+        this->signedBook = 1;
+    else
+        throw GradeTooLowException();
+}

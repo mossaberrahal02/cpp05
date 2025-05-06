@@ -6,7 +6,7 @@
 
 typedef std::string str;
 #define endl std::endl
-
+class Form;
 class Bureaucrat : public std::exception
 {
     private:
@@ -36,6 +36,8 @@ class Bureaucrat : public std::exception
             public:
                 const char * what() const throw();
         };
+        void signForm( Form & form);
 };
+#include "Form.hpp"
 
 std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj);

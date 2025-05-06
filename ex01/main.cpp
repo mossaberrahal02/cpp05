@@ -1,43 +1,35 @@
+#include "Form.hpp"
 #include "Bureaucrat.hpp"
 
 int main() {
     try {
-        Bureaucrat b1("Alice", 50);
-        std::cout << b1 << endl;
+        Bureaucrat bob("Bob", 50);
+        Form formA("FormA", 45, 30);
 
-        b1.increment();
-        std::cout << "After incrementing: " << b1 << endl;
+        std::cout << "Initial Form State:\n" << formA << "\n";
+        bob.signForm(formA);  // Should fail because 50 > 45
 
-        b1.decrement();
-        std::cout << "After decrementing: " << b1 << endl;
+        Bureaucrat alice("Alice", 20);
+        alice.signForm(formA);  // Should succeed
 
-        Bureaucrat b2("Bob", 1);  // Grade 1, the highest
-        std::cout << b2 << endl;
-        b2.increment();  // This should throw an exception
-    } catch (std::exception& e) {
-        std::cout << "Exception caught: " << e.what() << endl;
+        std::cout << "Form After Signing Attempt:\n" << formA << "\n";
+    }
+    catch (const std::exception &e) {
+        std::cerr << "Exception: " << e.what() << '\n';
     }
 
     try {
-        Bureaucrat b3("Charlie", 150);  // Grade 150, the lowest
-        std::cout << b3 << endl;
-        b3.decrement();  // This should throw an exception
-    } catch (std::exception& e) {
-        std::cout << "Exception caught: " << e.what() << endl;
+        // Grade too high
+        Form badFormHigh("TooHigh", 0, 30);
+    } catch (const std::exception &e) {
+        std::cerr << "Caught Exception (Too High): " << e.what() << '\n';
     }
 
     try {
-        Bureaucrat b4("Diana", 0);  // Grade 0 is too high
-        std::cout << b4 << endl;
-    } catch (std::exception& e) {
-        std::cout << "Exception caught during creation: " << e.what() << endl;
-    }
-
-    try {
-        Bureaucrat b5("Eve", 151);  // Grade 151 is too low
-        std::cout << b5 << endl;
-    } catch (std::exception& e) {
-        std::cout << "Exception caught during creation: " << e.what() << endl;
+        // Grade too low
+        Form badFormLow("TooLow", 151, 30);
+    } catch (const std::exception &e) {
+        std::cerr << "Caught Exception (Too Low): " << e.what() << '\n';
     }
 
     return 0;

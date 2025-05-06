@@ -1,8 +1,9 @@
+#include <exception>
+#include <iostream>
 #include "Bureaucrat.hpp"
 
 Bureaucrat::Bureaucrat( void ) : name("defaultName"), grade(150) 
 {
-    // std::cout << "default constructor\n";
     if(grade > 150)
     {
         throw GradeTooLowException();
@@ -15,7 +16,6 @@ Bureaucrat::Bureaucrat( void ) : name("defaultName"), grade(150)
 
 Bureaucrat::Bureaucrat( str name, int grade ): name(name), grade(grade)
 {
-    // std::cout << "params constructor "<< endl;
     if(grade > 150)
     {
         throw GradeTooLowException();
@@ -28,13 +28,11 @@ Bureaucrat::Bureaucrat( str name, int grade ): name(name), grade(grade)
 
 Bureaucrat::Bureaucrat( const Bureaucrat & obj )
 {
-    // std::cout << "copy constructor\n";
     *this = obj;
 }
 
 Bureaucrat & Bureaucrat::operator=( const Bureaucrat & obj )
 {
-    // std::cout << "copy assignement oper\n";
     if(this != &obj)
         this->grade = obj.getGrade();
     return *this;
@@ -42,7 +40,6 @@ Bureaucrat & Bureaucrat::operator=( const Bureaucrat & obj )
 
 Bureaucrat::~Bureaucrat( void ) throw()
 {
-    // std::cout << "destructor\n";
 }
 
 const str Bureaucrat::getName() const
@@ -89,4 +86,14 @@ std::ostream &operator<<(std::ostream &os, const Bureaucrat &obj)
 {
     os << obj.getName() << ", bureaucrat grade " << obj.getGrade() << ".";
     return os;
+}
+
+void Bureaucrat::signForm( Form & form )
+{
+    try {
+        form.beSigned(*this);
+        std::cout << this->getName() << " signed " << form.getName() << "\n";
+    } catch (std::exception &e){
+        std::cout << name << " couldn’t sign " << form.getName() << " because " << e.what() << "\n";
+    }
 }
