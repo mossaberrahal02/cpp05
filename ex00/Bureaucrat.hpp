@@ -7,7 +7,7 @@
 typedef std::string str;
 #define endl std::endl
 
-class Bureaucrat : public std::exception
+class Bureaucrat
 {
     private:
         const str name;
