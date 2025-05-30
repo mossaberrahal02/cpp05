@@ -23,7 +23,7 @@ ShrubberyCreationForm & ShrubberyCreationForm::operator=(const ShrubberyCreation
 void ShrubberyCreationForm::execute(const Bureaucrat &executor) const
 {
     if (!getSignedBook())
-        throw AForm::GradeTooLowException(); // Form not signed
+        throw AForm::FormNotSignedException(); // Form not signed
 
     if (executor.getGrade() > getGradeToExecute())
         throw AForm::GradeTooLowException(); // Not enough grade to execute

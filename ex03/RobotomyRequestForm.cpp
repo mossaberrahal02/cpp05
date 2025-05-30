@@ -7,12 +7,11 @@ RobotomyRequestForm::RobotomyRequestForm(const str &target)
 void RobotomyRequestForm::execute(const Bureaucrat &executor) const
 {
     if (!getSignedBook())
-        throw AForm::GradeTooLowException(); // Form not signed
+        throw AForm::FormNotSignedException(); // Form not signed
 
     if (executor.getGrade() > getGradeToExecute())
         throw AForm::GradeTooLowException(); // Not enough grade to execute
 
-    // Simulate a 50% success rate
     std::srand(std::time(NULL));
     int success = std::rand() % 2;
     std::cout << "Drilling noises... ";

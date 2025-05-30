@@ -1,53 +1,78 @@
 #include <iostream>
-#include "Bureaucrat.hpp"
+#include "Intern.hpp"
 #include "AForm.hpp"
-#include "ShrubberyCreationForm.hpp"
-#include "RobotomyRequestForm.hpp"
-#include "PresidentialPardonForm.hpp"
+#include "Bureaucrat.hpp"
 
 int main()
 {
-    try
+    Intern someRandomIntern;
+    Bureaucrat alice("Alice", 1);
+    Bureaucrat bob("Bob", 150);
+
+    AForm* form = NULL;
+
+    // creating a ShrubberyCreationForm
+    form = someRandomIntern.makeForm("shrubbery creation", "Home");
+    if (form)
     {
-        Bureaucrat highBureaucrat("HighBureaucrat", 15);
-        Bureaucrat lowBureaucrat("LowBureaucrat", 88);
+        std::cout << *form << endl;
 
-        ShrubberyCreationForm shrubberyForm("Home");
-        RobotomyRequestForm robotomyForm("Bob");
-        PresidentialPardonForm pardonForm("Alice");
+        try {
+            alice.signForm(*form);
+            alice.executeForm(*form);
+        }
+        catch (const std::exception &e) {
+            std::cerr << "Error: " << e.what() << endl;
+        }
 
-        std::cout << "Before signing:\n";
-        std::cout << "Shrubbery Form signed: " << shrubberyForm.getSignedBook() << endl;
-        std::cout << "Shrubbery Form signed: " << shrubberyForm.getSignedBook() << endl;
-        std::cout << "Shrubbery Form signed: " << shrubberyForm.getSignedBook() << endl;
-        std::cout << "Robotomy Form signed: " << robotomyForm.getSignedBook() << endl;
-        std::cout << "Pardon Form signed: " << pardonForm.getSignedBook() << endl;
-
-        highBureaucrat.signForm(shrubberyForm);
-        highBureaucrat.signForm(robotomyForm);
-        highBureaucrat.signForm(pardonForm);
-
-        
-        lowBureaucrat.signForm(shrubberyForm);
-        lowBureaucrat.signForm(robotomyForm); 
-        lowBureaucrat.signForm(pardonForm);   
-
-        std::cout << "Before signing:\n";
-        std::cout << "Shrubbery Form signed: " << shrubberyForm.getSignedBook() << endl;
-        std::cout << "Robotomy Form signed: " << robotomyForm.getSignedBook() << endl;
-        std::cout << "Pardon Form signed: " << pardonForm.getSignedBook() << endl;
-
-
-        highBureaucrat.executeForm(shrubberyForm);  
-        highBureaucrat.executeForm(robotomyForm);   
-        highBureaucrat.executeForm(pardonForm);     
-        lowBureaucrat.executeForm(shrubberyForm);   
-        lowBureaucrat.executeForm(robotomyForm);    
-        lowBureaucrat.executeForm(pardonForm);      
+        delete form;
     }
-    catch (const std::exception &e)
+
+    std::cout << "--------------------------------" << endl;
+
+    // creating a RobotomyRequestForm
+    form = someRandomIntern.makeForm("robotomy request", "Bender");
+    if (form)
     {
-        std::cout << "Exception: " << e.what() << endl;
+        std::cout << *form << endl;
+
+        try {
+            alice.signForm(*form);
+            alice.executeForm(*form);
+        }
+        catch (const std::exception &e) {
+            std::cerr << "Error: " << e.what() << endl;
+        }
+
+        delete form;
+    }
+
+    std::cout << "--------------------------------" << endl;
+
+    // creating a PresidentialPardonForm
+    form = someRandomIntern.makeForm("presidential pardon", "Marvin");
+    if (form)
+    {
+        std::cout << *form << endl;
+
+        try {
+            alice.signForm(*form);
+            alice.executeForm(*form);
+        }
+        catch (const std::exception &e) {
+            std::cerr << "Error: " << e.what() << endl;
+        }
+
+        delete form;
+    }
+
+    std::cout << "--------------------------------" << endl;
+
+    // creating an unknown form (should print error)
+    form = someRandomIntern.makeForm("unknown form", "Nobody");
+    if (form)
+    {
+        delete form;  // Should never get here
     }
 
     return 0;

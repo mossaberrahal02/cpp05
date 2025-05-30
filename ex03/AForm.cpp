@@ -81,6 +81,11 @@ const char * AForm::GradeTooLowException::what () const throw ()
     return "AForm grade is too low.";
 }
 
+const char * AForm::FormNotSignedException::what() const throw ()
+{
+    return "Form is not signed.";
+}
+
 void AForm::beSigned( Bureaucrat & b )
 {
     if(this->gradeToSign >= b.getGrade())
